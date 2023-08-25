@@ -4,12 +4,24 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.7.34003.232
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Renderer", "Renderer\Renderer.vcxproj", "{91EE9D79-3BCC-4C7E-B165-F9C92378731F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{36D311A2-FE48-4414-B207-D49743504C55} = {36D311A2-FE48-4414-B207-D49743504C55}
+		{B4C0C672-1322-4151-8E55-8679365DCF12} = {B4C0C672-1322-4151-8E55-8679365DCF12}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MathLib", "MathLib\MathLib.vcxproj", "{36D311A2-FE48-4414-B207-D49743504C55}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Geometry", "Geometry\Geometry.vcxproj", "{B4C0C672-1322-4151-8E55-8679365DCF12}"
+	ProjectSection(ProjectDependencies) = postProject
+		{36D311A2-FE48-4414-B207-D49743504C55} = {36D311A2-FE48-4414-B207-D49743504C55}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ModelViewer", "ModelViewer\ModelViewer.vcxproj", "{69BA92EE-6624-41C5-B36B-A749DDB407CF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{36D311A2-FE48-4414-B207-D49743504C55} = {36D311A2-FE48-4414-B207-D49743504C55}
+		{91EE9D79-3BCC-4C7E-B165-F9C92378731F} = {91EE9D79-3BCC-4C7E-B165-F9C92378731F}
+		{B4C0C672-1322-4151-8E55-8679365DCF12} = {B4C0C672-1322-4151-8E55-8679365DCF12}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
