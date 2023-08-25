@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="UI">
+      <UniqueIdentifier>{60a539b8-8fee-4e04-88e3-8269a0e4ebcf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\Gui">
+      <UniqueIdentifier>{8f73078f-dbdf-489a-98ff-e5ef520d44cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\Input">
+      <UniqueIdentifier>{412732de-c897-4b98-ba0e-43f0179162ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\Gui\Utils">
+      <UniqueIdentifier>{448ad6e3-2a63-45b2-9093-53eb8030978b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\Setting">
+      <UniqueIdentifier>{7c9ada48-9694-464e-b951-0d0611d98a65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\Gui\EditorGui">
+      <UniqueIdentifier>{566a6faf-714c-43f8-b510-ae9e4fb46d5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainEntry">
+      <UniqueIdentifier>{3ffdf000-b177-4156-a645-15619100695a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ModelViewer">
+      <UniqueIdentifier>{c9d93d92-6629-4033-bc6f-bee6c59da5cf}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="GuiUtils.cpp">
+      <Filter>UI\Gui\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorGui.cpp">
+      <Filter>UI\Gui\EditorGui</Filter>
+    </ClCompile>
+    <ClCompile Include="InputProcFuncs.cpp">
+      <Filter>UI\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelViewer.cpp">
+      <Filter>ModelViewer</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="EDevice.h" />
+    <ClInclude Include="GuiUtils.h">
+      <Filter>UI\Gui\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicOption.h">
+      <Filter>UI\Setting</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorGui.h">
+      <Filter>UI\Gui\EditorGui</Filter>
+    </ClInclude>
+    <ClInclude Include="InputProcFuncs.h">
+      <Filter>UI\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelViewer.h">
+      <Filter>ModelViewer</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

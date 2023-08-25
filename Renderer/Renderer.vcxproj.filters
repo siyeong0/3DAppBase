@@ -1,0 +1,244 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="MainEntry">
+      <UniqueIdentifier>{2e04555d-dc71-405f-9a64-7394d137903f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainEntry\pch">
+      <UniqueIdentifier>{d2459e24-d7bd-4e87-98f9-42fb2dd14ce0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3D11">
+      <UniqueIdentifier>{77613332-fd3a-4c8b-8e9b-594aa06d934c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3D11\Utils">
+      <UniqueIdentifier>{b86cf8ff-e33f-4c78-ac18-41ea268014b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3D11\Common">
+      <UniqueIdentifier>{db94a358-763c-429c-ba80-9283ca07d985}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{c4bacf23-a8c5-4cf1-b047-3a9d78953ae4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\HLSL">
+      <UniqueIdentifier>{732000d8-a9f3-4317-9ee9-9093737dd8b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3D11\Common\PSO">
+      <UniqueIdentifier>{c3bb6649-59ea-4cf3-9488-674e9b572fbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3D11\Renderer">
+      <UniqueIdentifier>{8f4d8d4d-5b86-42ac-97ce-b70be17982c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3D11\MeshObject">
+      <UniqueIdentifier>{1b0e2429-bc10-4fd3-9c90-4f04aefc5bf4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3D11\PostProcess">
+      <UniqueIdentifier>{18db5169-5ae7-48d0-86de-789ce07c476c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3D11\Gui">
+      <UniqueIdentifier>{4af131f8-a72c-4df8-b544-ac99fc097390}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IDI">
+      <UniqueIdentifier>{5424bf22-9f21-40d3-891a-fb48ce71a60f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IDI\IDIRenderer">
+      <UniqueIdentifier>{18510c48-2dbe-4648-bd1c-3a075613b388}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IDI\MeshObject">
+      <UniqueIdentifier>{fd4e04c2-975a-4af3-9f94-6ad1e0c1d810}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3D11\Skybox">
+      <UniqueIdentifier>{8e8497cd-5959-4b08-88a5-b806859f40d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IDI\IDIGui">
+      <UniqueIdentifier>{352ec253-fb33-4a30-8cbd-b1bb3907f80a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{ce5ce7f1-7911-4e2a-99bf-179692b68eba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Mesh">
+      <UniqueIdentifier>{5c25dac0-0004-41a4-843d-d5b9dab2e2ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\ConstantData">
+      <UniqueIdentifier>{8e975fbf-82bc-407b-8a80-86bbaa1fac6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Camera">
+      <UniqueIdentifier>{5ad7ca74-32a4-4ab4-afaa-5b167c3fdc9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\InputProc">
+      <UniqueIdentifier>{12afc052-edf9-4f9b-bb21-544b56135cad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer">
+      <UniqueIdentifier>{f116cf1a-6663-48c5-94be-84a6b2cf5534}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h">
+      <Filter>MainEntry\pch</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>MainEntry\pch</Filter>
+    </ClInclude>
+    <ClInclude Include="IDIRenderer.h">
+      <Filter>IDI\IDIRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstantBufferData.h">
+      <Filter>Common\ConstantData</Filter>
+    </ClInclude>
+    <ClInclude Include="IDIMeshObject.h">
+      <Filter>IDI\MeshObject</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11Utils.h">
+      <Filter>D3D11\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11PSO.h">
+      <Filter>D3D11\Common\PSO</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11Common.h">
+      <Filter>D3D11\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11Mesh.h">
+      <Filter>Common\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Common\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="InputProc.h">
+      <Filter>Common\InputProc</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11Skybox.h">
+      <Filter>D3D11\Skybox</Filter>
+    </ClInclude>
+    <ClInclude Include="dllAPI.h">
+      <Filter>MainEntry</Filter>
+    </ClInclude>
+    <ClInclude Include="IDIGui.h">
+      <Filter>IDI\IDIGui</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11Renderer.h">
+      <Filter>D3D11\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11MeshObject.h">
+      <Filter>D3D11\MeshObject</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11PostProcess.h">
+      <Filter>D3D11\PostProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11ImageFilter.h">
+      <Filter>D3D11\PostProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11Gui.h">
+      <Filter>D3D11\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderContext.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderOption.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>MainEntry</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>MainEntry\pch</Filter>
+    </ClCompile>
+    <ClCompile Include="IDIRenderer.cpp">
+      <Filter>IDI\IDIRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="IDIMeshObject.cpp">
+      <Filter>IDI\MeshObject</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D11Utils.cpp">
+      <Filter>D3D11\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D11PSO.cpp">
+      <Filter>D3D11\Common\PSO</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D11Common.cpp">
+      <Filter>D3D11\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Common\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="InputPorc.cpp">
+      <Filter>Common\InputProc</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D11Skybox.cpp">
+      <Filter>D3D11\Skybox</Filter>
+    </ClCompile>
+    <ClCompile Include="IDIGui.cpp">
+      <Filter>IDI\IDIGui</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D11Renderer.cpp">
+      <Filter>D3D11\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D11MeshObject.cpp">
+      <Filter>D3D11\MeshObject</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D11PostProcess.cpp">
+      <Filter>D3D11\PostProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D11ImageFilter.cpp">
+      <Filter>D3D11\PostProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D11Gui.cpp">
+      <Filter>D3D11\Gui</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shaders\BasicPS.hlsl">
+      <Filter>Shader\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\BasicVS.hlsl">
+      <Filter>Shader\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\BloomDownPS.hlsl">
+      <Filter>Shader\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\BloomUpPS.hlsl">
+      <Filter>Shader\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\ColorPS.hlsl">
+      <Filter>Shader\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\CombinePS.hlsl">
+      <Filter>Shader\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\DepthOnlyPS.hlsl">
+      <Filter>Shader\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\DepthOnlyVS.hlsl">
+      <Filter>Shader\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\NormalGS.hlsl">
+      <Filter>Shader\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\NormalPS.hlsl">
+      <Filter>Shader\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\NormalVS.hlsl">
+      <Filter>Shader\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SamplingPS.hlsl">
+      <Filter>Shader\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SamplingVS.hlsl">
+      <Filter>Shader\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SkyboxPS.hlsl">
+      <Filter>Shader\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SkyboxVS.hlsl">
+      <Filter>Shader\HLSL</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\Common.hlsli">
+      <Filter>Shader\HLSL</Filter>
+    </None>
+  </ItemGroup>
+</Project>

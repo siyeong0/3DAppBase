@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="MainEntry">
+      <UniqueIdentifier>{459e3249-b82b-49c7-9949-f76b531f1a81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainEntry\pch">
+      <UniqueIdentifier>{a149a77d-7e47-4509-af02-ad2e1090005d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MeshData">
+      <UniqueIdentifier>{e936f425-fffa-4d1a-846b-34d2cf38afde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ModelLoader">
+      <UniqueIdentifier>{d061d2f2-3aea-44bd-a258-e028a035f6a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GeometryGenerator">
+      <UniqueIdentifier>{d326d3aa-5137-46c4-96a5-e0c1ef759742}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Geometry">
+      <UniqueIdentifier>{46e05b59-762f-414d-878b-5d61c11f41bc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h">
+      <Filter>MainEntry\pch</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>MainEntry\pch</Filter>
+    </ClInclude>
+    <ClInclude Include="dllAPI.h">
+      <Filter>MainEntry</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertex.h">
+      <Filter>MeshData</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshData.h">
+      <Filter>MeshData</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelLoader.h">
+      <Filter>ModelLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="GeometryGenerator.h">
+      <Filter>GeometryGenerator</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp">
+      <Filter>MainEntry\pch</Filter>
+    </ClCompile>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>MainEntry</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelLoader.cpp">
+      <Filter>ModelLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="GeometryGenerator.cpp">
+      <Filter>GeometryGenerator</Filter>
+    </ClCompile>
+    <ClCompile Include="Geometry.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
