@@ -123,15 +123,18 @@ bool ModelViewer::Initialize()
 		mFloor = RenderContext("plane");
 		mFloor.TransformMatrix = Matrix::CreateFromQuaternion({ 0.7071067f, 0, 0, 0.7071069f }) * Matrix::CreateTranslation(0.0f, FLOOR_Y, 0.0f);
 	}
-	
+
 	// Init Lights
 	{
-		Vector3 pos = { 1,1.5,0 };
-		mRenderer->AddSpotLight(pos, { 0.0f,-1.0f,0 }, { 0.5f, 0.5f, 0.5f }, 0.4f, 5.0f);
+		Vector3 pos = { 1.0f, 1.5f, 0.0f };
+		mRenderer->AddSpotLight(pos, { 0.0f, -1.0f, 0 }, { 0.5f, 0.5f, 0.5f }, 0.03f, 5.0f);
+		Vector3 pos2 = { 0.0f, 1.5f, 1.0f };
+		mRenderer->AddSpotLight(pos2, { 1.0f, -1.0f, 0 }, { 0.7f, 0.7f, 0.7f }, 0.05f, 10.0f);
 
 		auto meshes = std::vector{ GeometryGenerator::MakeSphere(0.03f, 3,3) };
 		mRenderer->RegistMesh("sphere", new D3D11MeshObject(meshes));
 		mExtras.push_back(RenderContext("sphere", pos));
+		mExtras.push_back(RenderContext("sphere", pos2));
 	}
 
 	// Init Camera

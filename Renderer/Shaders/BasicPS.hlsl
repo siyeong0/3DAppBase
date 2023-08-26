@@ -1,6 +1,5 @@
-#include "Common.hlsli" // 쉐이더에서도 include 사용 가능
-
-// 참고자료
+#include "Common.hlsli"
+#include "DiskSamples.hlsli"
 // https://github.com/Nadrin/PBR/blob/master/data/shaders/hlsl/pbr.hlsl
 
 Texture2D albedoTex : register(t0);
@@ -12,16 +11,16 @@ Texture2D emissiveTex : register(t5);
 
 static const float3 Fdielectric = 0.04; // 비금속(Dielectric) 재질의 F0
 
+struct PixelShaderOutput
+{
+	float4 pixelColor : SV_Target0;
+};
+
 float3 SchlickFresnel(float3 F0, float NdotH)
 {
 	return F0 + (1.0 - F0) * pow(2.0, (-5.55473 * NdotH - 6.98316) * NdotH);
     //return F0 + (1.0 - F0) * pow(1.0 - cosTheta, 5.0);
 }
-
-struct PixelShaderOutput
-{
-	float4 pixelColor : SV_Target0;
-};
 
 float3 GetNormal(PixelShaderInput input)
 {
@@ -103,6 +102,72 @@ float SchlickGGX(float NdotI, float NdotO, float roughness)
 	return SchlickG1(NdotI, k) * SchlickG1(NdotO, k);
 }
 
+// NdcDepth to ViewDepth
+float N2V(float ndcDepth, matrix invProj)
+{
+    float4 pointView = mul(float4(0, 0, ndcDepth, 1), invProj);
+    return pointView.z / pointView.w;
+}
+
+// Light Constants
+#define NEAR_PLANE 0.1
+#define LIGHT_FRUSTUM_WIDTH 0.34641
+
+void FindBlocker(out float avgBlockerDepthView, out float numBlockers, float2 uv,
+				float zReceiverView, Texture2D shadowMap, matrix invProj, float lightRadiusWorld)
+{
+	float lightRadiusUV = lightRadiusWorld / LIGHT_FRUSTUM_WIDTH;
+	float searchRadius = lightRadiusUV * (zReceiverView - NEAR_PLANE) / zReceiverView;
+	
+	float blockerSum = 0.0f;
+	numBlockers = 0;
+	for (int i = 0; i < 64;i++)
+	{
+		float shadowMapDepth = shadowMap.SampleLevel(shadowPointSS, float2(uv + diskSamples64[i] * searchRadius), 0).r;
+		shadowMapDepth = N2V(shadowMapDepth, invProj);
+		
+		if(shadowMapDepth < zReceiverView)
+		{
+			blockerSum += shadowMapDepth;
+			numBlockers++;
+		}
+	}
+	avgBlockerDepthView = blockerSum / numBlockers;
+}
+
+float PCFFilter(float2 uv, float zReceiverNdc, float filterRadiusUV, Texture2D shadowMap)
+{
+	float sum = 0.0;
+	for (int i = 0; i < 64; i++)
+	{
+		float2 offset = diskSamples64[i] * filterRadiusUV;
+		sum += shadowMap.SampleCmpLevelZero(shadowCompareSS, uv + offset, zReceiverNdc);
+	}
+	return sum / 64.0;
+}
+
+float PCSS(float2 uv, float zReceiverNdc, Texture2D shadowMap, matrix invProj, float lightRadiusWorld)
+{
+	float lightRadiusUV = lightRadiusWorld / LIGHT_FRUSTUM_WIDTH;
+	float zReceiverView = N2V(zReceiverNdc, invProj);
+	
+	float avgBlockerDepthView = 0;
+	float numBlockers = 0;
+	FindBlocker(avgBlockerDepthView, numBlockers, uv, zReceiverView, shadowMap, proj, lightRadiusWorld);
+	
+	if(numBlockers < 1)
+	{
+		return 1.0;
+	}
+	else
+	{
+		float penumbraRatio = (zReceiverView - avgBlockerDepthView) / avgBlockerDepthView;
+		float filterRadiusUV = penumbraRatio * lightRadiusUV * NEAR_PLANE / zReceiverView;
+		
+		return PCFFilter(uv, zReceiverNdc, filterRadiusUV, shadowMap);
+	}
+}
+
 float3 LightRadiance(Light light, float3 posWorld, float3 normalWorld, Texture2D shadowMap)
 {
     // Directional light
@@ -121,33 +186,29 @@ float3 LightRadiance(Light light, float3 posWorld, float3 normalWorld, Texture2D
 	float shadowFactor = 1.0;
 	if (light.type & LIGHT_SHADOW)
 	{
-		const float nearZ = 0.01; // 카메라 설정과 동일
-        
-        // 1. Project posWorld to light screen
-        // light.viewProj 사용
 		float4 lightScreen = mul(float4(posWorld, 1.0), light.viewProj);
 		lightScreen.xyz /= lightScreen.w;
         
-        // 2. 카메라(광원)에서 볼 때의 텍스춰 좌표 계산
-        // [-1, 1]x[-1, 1] -> [0, 1]x[0, 1]
-        // 주의: 텍스춰 좌표와 NDC는 y가 반대
 		float2 lightTexcoord = float2(lightScreen.x, lightScreen.y);
 		lightTexcoord.x = (lightTexcoord.x + 1.0) / 2.0;
 		lightTexcoord.y = (-lightTexcoord.y + 1.0) / 2.0;
         
-        // 3. 쉐도우맵에서 값 가져오기
-		float depth = shadowMap.Sample(shadowPointSS, lightTexcoord).r;
+		//float depth = shadowMap.Sample(shadowPointSS, lightTexcoord).r;
 		
-        // 4. 가려져 있다면 그림자로 표시
-        // 힌트: 작은 bias (0.001 정도) 필요
-		if (depth + 1e-3 < lightScreen.z)
-		{
-			shadowFactor = 0.0; // <- 0.0의 의미는?
-		}
+		//if (depth + 1e-3 < lightScreen.z)
+		//{
+		//	shadowFactor = 0.0; // <- 0.0의 의미는?
+		//}
+		
+		uint width, height, numMips;
+		shadowMap.GetDimensions(0, width, height, numMips);
+		
+		float dx = 5.0f / float(width);
+		//shadowFactor = PCFFilter(lightTexcoord.xy, lightScreen.z - 0.001, dx, shadowMap);
+		shadowFactor = PCSS(lightTexcoord.xy, lightScreen.z - 0.001, shadowMap, light.invProj, light.radius);
 	}
 	
 	float3 radiance = light.radiance * spotFator * att * shadowFactor;
-	
 	return radiance;
 }
 
