@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "D3D11ImageFilter.h"
 
-ImageFilter::ImageFilter(
+D3D11ImageFilter::D3D11ImageFilter(
 	ComPtr<ID3D11Device>& device,
 	ComPtr<ID3D11DeviceContext>& context,
 	ComPtr<ID3D11PixelShader>& pixelShader,
@@ -10,7 +10,7 @@ ImageFilter::ImageFilter(
 	Initialize(device, context, pixelShader, width, height);
 }
 
-void ImageFilter::Initialize(
+void D3D11ImageFilter::Initialize(
 	ComPtr<ID3D11Device>& device,
 	ComPtr<ID3D11DeviceContext>& context,
 	ComPtr<ID3D11PixelShader>& pixelShader,
@@ -32,12 +32,12 @@ void ImageFilter::Initialize(
 	D3D11Utils::CreateConstBuffer(device, mConstData, mConstBuffer);
 }
 
-void ImageFilter::UpdateConstantBuffers(ComPtr<ID3D11Device>& device, ComPtr<ID3D11DeviceContext>& context)
+void D3D11ImageFilter::UpdateConstantBuffers(ComPtr<ID3D11Device>& device, ComPtr<ID3D11DeviceContext>& context)
 {
 	D3D11Utils::UpdateBuffer(device, context, mConstData, mConstBuffer);
 }
 
-void ImageFilter::Render(ComPtr<ID3D11DeviceContext>& context) const
+void D3D11ImageFilter::Render(ComPtr<ID3D11DeviceContext>& context) const
 {
 	assert(mShaderResources.size() > 0);
 	assert(mRenderTargets.size() > 0);
@@ -49,7 +49,7 @@ void ImageFilter::Render(ComPtr<ID3D11DeviceContext>& context) const
 	context->PSSetConstantBuffers(0, 1, mConstBuffer.GetAddressOf());
 }
 
-void ImageFilter::SetShaderResources(const std::vector<ComPtr<ID3D11ShaderResourceView>>& resources)
+void D3D11ImageFilter::SetShaderResources(const std::vector<ComPtr<ID3D11ShaderResourceView>>& resources)
 {
 	mShaderResources.clear();
 	for (const auto& res : resources)
@@ -58,7 +58,7 @@ void ImageFilter::SetShaderResources(const std::vector<ComPtr<ID3D11ShaderResour
 	}
 }
 
-void ImageFilter::SetRenderTargets(const std::vector<ComPtr<ID3D11RenderTargetView>>& targets)
+void D3D11ImageFilter::SetRenderTargets(const std::vector<ComPtr<ID3D11RenderTargetView>>& targets)
 {
 	mRenderTargets.clear();
 	for (const auto& tar : targets)

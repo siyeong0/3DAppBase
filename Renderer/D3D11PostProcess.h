@@ -1,7 +1,7 @@
 #pragma once
 #include "D3D11ImageFilter.h"
 
-class RENDERER_API PostProcess
+class RENDERER_API D3D11PostProcess
 {
 public:
 	void
@@ -12,15 +12,15 @@ public:
 
 	void Render(ComPtr<ID3D11DeviceContext>& context);
 
-	void RenderImageFilter(ComPtr<ID3D11DeviceContext>& context, const ImageFilter& imageFilter);
+	void RenderImageFilter(ComPtr<ID3D11DeviceContext>& context, const D3D11ImageFilter& imageFilter);
 
 	void CreateBuffer(ComPtr<ID3D11Device>& device, ComPtr<ID3D11DeviceContext>& context, int width,
 		int height, ComPtr<ID3D11ShaderResourceView>& srv, ComPtr<ID3D11RenderTargetView>& rtv);
 
 public:
-	ImageFilter mCombineFilter;
-	std::vector<ImageFilter> mBloomDownFilters;
-	std::vector<ImageFilter> mBloomUpFilters;
+	D3D11ImageFilter mCombineFilter;
+	std::vector<D3D11ImageFilter> mBloomDownFilters;
+	std::vector<D3D11ImageFilter> mBloomUpFilters;
 
 private:
 	std::unique_ptr<D3D11Mesh> mMesh;

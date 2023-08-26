@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "D3D11PostProcess.h"
 
-void PostProcess::Initialize(
+void D3D11PostProcess::Initialize(
 	ComPtr<ID3D11Device>& device, ComPtr<ID3D11DeviceContext>& context,
 	const std::vector<ComPtr<ID3D11ShaderResourceView>>& resources,
 	const std::vector<ComPtr<ID3D11RenderTargetView>>& targets, const int width,
@@ -94,7 +94,7 @@ void PostProcess::Initialize(
 	mCombineFilter.UpdateConstantBuffers(device, context);
 }
 
-void PostProcess::Render(ComPtr<ID3D11DeviceContext>& context)
+void D3D11PostProcess::Render(ComPtr<ID3D11DeviceContext>& context)
 {
 	context->RSSetState(mRasterizerSate.Get());
 
@@ -122,13 +122,13 @@ void PostProcess::Render(ComPtr<ID3D11DeviceContext>& context)
 	RenderImageFilter(context, mCombineFilter);
 }
 
-void PostProcess::RenderImageFilter(ComPtr<ID3D11DeviceContext>& context, const ImageFilter& imageFilter)
+void D3D11PostProcess::RenderImageFilter(ComPtr<ID3D11DeviceContext>& context, const D3D11ImageFilter& imageFilter)
 {
 	imageFilter.Render(context);
 	context->DrawIndexed(mMesh->mIndexCount, 0, 0);
 }
 
-void PostProcess::CreateBuffer(ComPtr<ID3D11Device>& device, ComPtr<ID3D11DeviceContext>& context,
+void D3D11PostProcess::CreateBuffer(ComPtr<ID3D11Device>& device, ComPtr<ID3D11DeviceContext>& context,
 	int width, int height, ComPtr<ID3D11ShaderResourceView>& srv, ComPtr<ID3D11RenderTargetView>& rtv)
 {
 	ComPtr<ID3D11Texture2D> texture;

@@ -66,7 +66,6 @@ public:
 	ComPtr<ID3D11Texture2D> mShadowBuffers[MAX_LIGHTS]; // No MSAA
 	ComPtr<ID3D11DepthStencilView> mShadowDSVs[MAX_LIGHTS];
 	ComPtr<ID3D11ShaderResourceView> mShadowSRVs[MAX_LIGHTS];
-	GlobalConstantsData mShadowGlobalConstantDatas[MAX_LIGHTS];
 	ComPtr<ID3D11Buffer> mShadowGlobalConstBuffers[MAX_LIGHTS];
 	// Rasterizer State
 	ComPtr<ID3D11RasterizerState> mSolidRS;
@@ -78,7 +77,7 @@ public:
 	// Skybox
 	D3D11Skybox mCubeMapping;
 	// PostProcess
-	PostProcess mPostProcess;
+	D3D11PostProcess mPostProcess;
 
 	// Options
 	UINT mNumQualityLevels = 0;

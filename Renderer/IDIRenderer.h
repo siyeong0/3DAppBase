@@ -67,6 +67,7 @@ public:
 	// Global Constant Data
 	GlobalConstantsData mGlobalConstData;
 	GlobalConstantsData mGlobalMirrorConstData;
+	GlobalConstantsData mShadowGlobalConstantDatas[MAX_LIGHTS];
 	int mNumLights = 0;
 
 	// IO Utils

@@ -6,12 +6,12 @@
 
 using DirectX::SimpleMath::Vector4;
 
-class RENDERER_API ImageFilter
+class RENDERER_API D3D11ImageFilter
 {
 public:
-	ImageFilter() {};
+	D3D11ImageFilter() {};
 
-	ImageFilter(ComPtr<ID3D11Device>& device, ComPtr<ID3D11DeviceContext>& context, ComPtr<ID3D11PixelShader>& pixelShader,
+	D3D11ImageFilter(ComPtr<ID3D11Device>& device, ComPtr<ID3D11DeviceContext>& context, ComPtr<ID3D11PixelShader>& pixelShader,
 		int width, int height);
 	void Initialize(ComPtr<ID3D11Device>& device, ComPtr<ID3D11DeviceContext>& context, ComPtr<ID3D11PixelShader>& pixelShader,
 		int width, int height);
