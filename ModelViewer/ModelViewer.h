@@ -2,10 +2,10 @@
 #include <Windows.h>
 #include <memory>
 #include "Renderer.h"
+#include "EDevice.h"
 
 using std::unique_ptr;
 using std::make_unique;
-
 
 class ModelViewer;
 
@@ -16,20 +16,22 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 class ModelViewer
 {
 public:
-	ModelViewer();
+	ModelViewer(eDevice device = eDevice::DX11);
 	~ModelViewer();
 
 	bool Initialize();
 	void Run();
 
-	HWND GetWindow() const;
 	Camera& GetCamera() const;
 	RenderContext& GetModel();
 	InputProc& GetInputProc();
 
 	void ExitLoop();
+
 private:
-	unique_ptr<D3D11Renderer> mRenderer;
+	eDevice meDev;
+
+	unique_ptr<IDIRenderer> mRenderer;
 	IDIGui* mGui;
 	std::vector<IFrame*> mFrames;
 	Camera* mMainCamera;

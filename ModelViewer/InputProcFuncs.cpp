@@ -57,7 +57,7 @@ void InputProcFuncs::MoveView(float dt)
 		GetModelViewer()->GetCamera().OnMouseMove(GetRenderer()->mCursorNdcX, GetRenderer()->mCursorNdcY);
 
 		POINT Center{ int(GetRenderer()->mViewportTopLeftX + GetRenderer()->mViewportWidth / 2), int(GetRenderer()->mViewportTopLeftY + GetRenderer()->mViewportHeight / 2)};
-		ClientToScreen(GetModelViewer()->GetWindow(), &Center);
+		//ClientToScreen(GetModelViewer()->GetWindow(), &Center);
 		SetCursorPos(Center.x, Center.y);
 	}
 }

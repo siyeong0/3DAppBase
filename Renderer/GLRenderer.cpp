@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "GLRenderer.h"
 
-GLRenderer::GLRenderer(const std::string& title)
+GLRenderer::GLRenderer(const std::wstring& title)
 	: IDIRenderer(title)
 	, mMainWindow(nullptr)
 {
@@ -15,21 +15,18 @@ GLRenderer::~GLRenderer()
 
 bool GLRenderer::Initialize()
 {
-	bool br = false;
-	br = IDIRenderer::Initialize();
+	IDIRenderer::Initialize();
+	if (!initDevice())
+	{
+		return false;
+	}
 
-	return br;
+	return true;
 }
 
 void GLRenderer::Update(float dt)
 {
-	IDIRenderer::Update(dt);
 
-	if (mbOptionDirty)
-	{
-		mGlobalConstData.IBLStrength = mOption.IBLStrength;
-		mbOptionDirty = false;
-	}
 }
 
 void GLRenderer::RenderBegin()
@@ -58,16 +55,6 @@ void GLRenderer::InitSkybox(std::wstring envFilename, std::wstring specularFilen
 
 }
 
-void GLRenderer::Terminate()
-{
-
-}
-
-void GLRenderer::SetCursorPosNdc(float x, float y)
-{
-
-}
-
 bool GLRenderer::initDevice()
 {
 	// Init libarary
@@ -79,7 +66,8 @@ bool GLRenderer::initDevice()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	// Init Window
-	mMainWindow = glfwCreateWindow(mOption.Resolution.Width, mOption.Resolution.Height, mTitle.c_str(), NULL, NULL);
+	std::string title = std::string().assign(mTitle.begin(), mTitle.end());
+	mMainWindow = glfwCreateWindow(mOption.Resolution.Width, mOption.Resolution.Height, title.c_str(), NULL, NULL);
 	if (!mMainWindow)
 	{
 		glfwTerminate();
@@ -91,6 +79,12 @@ bool GLRenderer::initDevice()
 	{
 		return false;
 	}
+
+	return true;
+}
+
+bool GLRenderer::initGui()
+{
 
 	return true;
 }

@@ -3,4 +3,5 @@
 enum class eDevice
 {
 	DX11,
+	GL,
 };

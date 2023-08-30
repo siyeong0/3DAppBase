@@ -40,17 +40,11 @@
     <Filter Include="IDI">
       <UniqueIdentifier>{5424bf22-9f21-40d3-891a-fb48ce71a60f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="IDI\IDIRenderer">
-      <UniqueIdentifier>{18510c48-2dbe-4648-bd1c-3a075613b388}</UniqueIdentifier>
-    </Filter>
     <Filter Include="IDI\MeshObject">
       <UniqueIdentifier>{fd4e04c2-975a-4af3-9f94-6ad1e0c1d810}</UniqueIdentifier>
     </Filter>
     <Filter Include="D3D11\Skybox">
       <UniqueIdentifier>{8e8497cd-5959-4b08-88a5-b806859f40d0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="IDI\IDIGui">
-      <UniqueIdentifier>{352ec253-fb33-4a30-8cbd-b1bb3907f80a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Common">
       <UniqueIdentifier>{ce5ce7f1-7911-4e2a-99bf-179692b68eba}</UniqueIdentifier>
@@ -70,6 +64,18 @@
     <Filter Include="Renderer">
       <UniqueIdentifier>{f116cf1a-6663-48c5-94be-84a6b2cf5534}</UniqueIdentifier>
     </Filter>
+    <Filter Include="OpenGL">
+      <UniqueIdentifier>{40589527-f36c-42fa-a630-baee5fd35147}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Renderer">
+      <UniqueIdentifier>{460d377a-6386-4763-bcef-faa2046a83fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IDI\Renderer">
+      <UniqueIdentifier>{18510c48-2dbe-4648-bd1c-3a075613b388}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IDI\Gui">
+      <UniqueIdentifier>{352ec253-fb33-4a30-8cbd-b1bb3907f80a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -79,7 +85,7 @@
       <Filter>MainEntry\pch</Filter>
     </ClInclude>
     <ClInclude Include="IDIRenderer.h">
-      <Filter>IDI\IDIRenderer</Filter>
+      <Filter>IDI\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="ConstantBufferData.h">
       <Filter>Common\ConstantData</Filter>
@@ -112,7 +118,7 @@
       <Filter>MainEntry</Filter>
     </ClInclude>
     <ClInclude Include="IDIGui.h">
-      <Filter>IDI\IDIGui</Filter>
+      <Filter>IDI\Gui</Filter>
     </ClInclude>
     <ClInclude Include="D3D11Renderer.h">
       <Filter>D3D11\Renderer</Filter>
@@ -139,7 +145,10 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="IFrame.h">
-      <Filter>IDI\IDIGui</Filter>
+      <Filter>IDI\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="GLRenderer.h">
+      <Filter>OpenGL\Renderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -150,7 +159,7 @@
       <Filter>MainEntry\pch</Filter>
     </ClCompile>
     <ClCompile Include="IDIRenderer.cpp">
-      <Filter>IDI\IDIRenderer</Filter>
+      <Filter>IDI\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="IDIMeshObject.cpp">
       <Filter>IDI\MeshObject</Filter>
@@ -174,7 +183,7 @@
       <Filter>D3D11\Skybox</Filter>
     </ClCompile>
     <ClCompile Include="IDIGui.cpp">
-      <Filter>IDI\IDIGui</Filter>
+      <Filter>IDI\Gui</Filter>
     </ClCompile>
     <ClCompile Include="D3D11Renderer.cpp">
       <Filter>D3D11\Renderer</Filter>
@@ -190,6 +199,9 @@
     </ClCompile>
     <ClCompile Include="D3D11Gui.cpp">
       <Filter>D3D11\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="GLRenderer.cpp">
+      <Filter>OpenGL\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -171,6 +171,7 @@
     <ClInclude Include="D3D11Utils.h" />
     <ClInclude Include="dllAPI.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="GLRenderer.h" />
     <ClInclude Include="IDIGui.h" />
     <ClInclude Include="IDIMeshObject.h" />
     <ClInclude Include="IFrame.h" />
@@ -193,6 +194,7 @@
     <ClCompile Include="D3D11Skybox.cpp" />
     <ClCompile Include="D3D11Utils.cpp" />
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="GLRenderer.cpp" />
     <ClCompile Include="IDIGui.cpp" />
     <ClCompile Include="IDIMeshObject.cpp" />
     <ClCompile Include="InputPorc.cpp" />

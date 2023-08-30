@@ -8,7 +8,7 @@
 class RENDERER_API GLRenderer : public IDIRenderer
 {
 public:
-	GLRenderer(const std::string& title);
+	GLRenderer(const std::wstring& title);
 	virtual ~GLRenderer();
 
 	virtual bool Initialize() override;
@@ -22,12 +22,10 @@ public:
 
 	virtual void InitSkybox(std::wstring envFilename, std::wstring specularFilename, std::wstring irradianceFilename, std::wstring brdfFilename) override;
 
-	virtual void Terminate() override;
-	virtual void SetCursorPosNdc(float x, float y) override;
-
 // protected:
 public:
 	virtual bool initDevice() override;
+	virtual bool initGui() override;
 	virtual void setMainViewport() override;
 
 // pivate:
