@@ -1,6 +1,5 @@
 #pragma once
 #include "dllAPI.h"
-#include "IDIRenderer.h"
 #include <imgui.h>
 #include <Windows.h>
 
@@ -16,11 +15,7 @@ public:
 	virtual void RenderBegin() = 0;
 	virtual void RenderEnd() = 0;
 
-	void Assgin(IDIRenderer* targetRenderer);
-	LRESULT MsgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+	void Resize(int w, int h);
 
 	ImGuiContext* Context();
-
-public:
-	IDIRenderer* TargetRenderer;
 };

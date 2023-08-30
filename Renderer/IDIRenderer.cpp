@@ -14,8 +14,33 @@ IDIRenderer* GetRenderer()
 	return gRenderer;
 }
 
-IDIRenderer::IDIRenderer(HWND mainWindow)
-	: mViewportTopLeftX(DEFAULT_VIEWPORT_TOPLEFT_X)
+LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+	if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
+	{
+		return true;
+	}
+
+	GetRenderer()->MsgProc(hWnd, msg, wParam, lParam);
+	switch (msg)
+	{
+	case WM_SYSCOMMAND:
+		if ((wParam & 0xfff0) == SC_KEYMENU) // Disable ALT application menu
+		{
+			return 0;
+		}
+		break;
+	case WM_DESTROY:
+		::PostQuitMessage(0);
+		return 0;
+	}
+
+	return ::DefWindowProc(hWnd, msg, wParam, lParam);;
+}
+
+IDIRenderer::IDIRenderer(std::wstring title)
+	: mTitle(title)
+	, mViewportTopLeftX(DEFAULT_VIEWPORT_TOPLEFT_X)
 	, mViewportTopLeftY(DEFAULT_VIEWPORT_TOPLEFT_Y)
 	, mViewportWidth(DEFAULT_VIEWPORT_WIDTH)
 	, mViewportHeight(DEFAULT_VIEWPORT_HEIGHT)
@@ -23,8 +48,9 @@ IDIRenderer::IDIRenderer(HWND mainWindow)
 	, mViewportTopLeftYRatio(double(mViewportTopLeftY) / mOption.Resolution.Height)
 	, mViewportWidthRatio(double(mViewportWidth) / mOption.Resolution.Width)
 	, mViewportHeightRatio(double(mViewportHeight) / mOption.Resolution.Height)
-	, mMainWindow(mainWindow)
+	, mGui(nullptr)
 	, mCamera(nullptr)
+	, mInputProc(nullptr)
 	, mCursorNdcX(0.0f)
 	, mCursorNdcY(0.0f)
 {
@@ -35,6 +61,8 @@ IDIRenderer::~IDIRenderer()
 {
 	gRenderer = nullptr;
 
+	mGui->OnDetach();
+
 	for (auto& ptr : mMeshTable)
 	{
 		delete ptr.second;
@@ -43,13 +71,6 @@ IDIRenderer::~IDIRenderer()
 
 bool IDIRenderer::Initialize()
 {
-	if (!initDevice())
-	{
-		return false;
-	}
-
-	SetForegroundWindow(mMainWindow);
-
 	mMeshTable.reserve(1024);
 	mInCameraFrustum.reserve(1000000);
 
@@ -79,6 +100,16 @@ void IDIRenderer::Render(const RenderContext& context)
 	}
 }
 
+void IDIRenderer::GuiRenderBegin()
+{
+	mGui->RenderBegin();
+}
+
+void IDIRenderer::GuiRenderEnd()
+{
+	mGui->RenderEnd();
+}
+
 void IDIRenderer::RegistMesh(const std::string& name, IDIMeshObject* meshObj)
 {
 	mMeshTable[name] = meshObj;
@@ -101,6 +132,11 @@ void IDIRenderer::InitCamera(Camera* camera)
 {
 	mCamera = camera;
 	mCamera->SetAspectRatio(aspectRatio());
+}
+
+void IDIRenderer::InitInputProc(InputProc* inputProc)
+{
+	mInputProc = inputProc;
 }
 
 void IDIRenderer::SetRenderOption(RenderOption& option)
@@ -127,10 +163,21 @@ void IDIRenderer::Resize(int width, int height)
 {
 	mOption.Resolution.Width = width;
 	mOption.Resolution.Height = height;
+
+	mViewportTopLeftX = int(mViewportTopLeftXRatio * mOption.Resolution.Width);
+	mViewportTopLeftY = int(mViewportTopLeftYRatio * mOption.Resolution.Height);
+	mViewportWidth = int(mViewportWidthRatio * mOption.Resolution.Width);
+	mViewportHeight = int(mViewportHeightRatio * mOption.Resolution.Height);
+
+	mGui->Resize(width, height);
 }
 
 LRESULT IDIRenderer::MsgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
+	if (mInputProc)
+	{
+		mInputProc->MsgProc(hwnd, msg, wParam, lParam);
+	}
 	switch (msg)
 	{
 	case WM_SIZE:	// Resizing window

@@ -22,7 +22,7 @@ void InputProcFuncs::SetFirstPersonView()
 
 void InputProcFuncs::Terminate()
 {
-	DestroyWindow(GetModelViewer()->GetWindow());
+	GetModelViewer()->ExitLoop();
 }
 
 void InputProcFuncs::MoveForward(float dt)

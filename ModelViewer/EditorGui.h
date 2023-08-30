@@ -3,7 +3,7 @@
 
 namespace EditorGui
 {
-	void Assign(IDIGui* targetGui);
+	void Assign(int w, int h);
 
 	void DrawTopMenuBar();
 	void DrawLeftFrame();

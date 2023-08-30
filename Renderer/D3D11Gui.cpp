@@ -24,7 +24,11 @@ void D3D11Gui::OnAttach()
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	io.DisplaySize = ImVec2(float(TargetRenderer->GetRenderOption().Resolution.Width), float(TargetRenderer->GetRenderOption().Resolution.Height));
+	RECT rect;
+	GetWindowRect(mWindow, &rect);
+	int width = rect.right - rect.left;
+	int height = rect.bottom - rect.top;
+	io.DisplaySize = ImVec2(float(width), float(height));
 
 	// Setup Dear ImGui style
 	ImGui::StyleColorsDark();

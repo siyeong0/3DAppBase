@@ -10,84 +10,17 @@ extern ModelViewer* GetModelViewer()
 	return gModelViewer;
 }
 
-extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-
-LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
-{
-	if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
-	{
-		return true;
-	}
-
-	GetRenderer()->MsgProc(hWnd, msg, wParam, lParam);
-	GetModelViewer()->GetGui()->MsgProc(hWnd, msg, wParam, lParam);
-	GetModelViewer()->GetInputProc().MsgProc(hWnd, msg, wParam, lParam);
-
-	switch (msg)
-	{
-	case WM_SYSCOMMAND:
-		if ((wParam & 0xfff0) == SC_KEYMENU) // Disable ALT application menu
-		{
-			return 0;
-		}
-		break;
-	case WM_DESTROY:
-		::PostQuitMessage(0);
-		return 0;
-	}
-
-	return ::DefWindowProc(hWnd, msg, wParam, lParam);;
-}
-
 ModelViewer::ModelViewer()
-	: mWindow(0)
-	, mGui(nullptr)
-	, mMainCamera(nullptr)
+	: mMainCamera(nullptr)
 {
 	gModelViewer = this;
 }
 
 bool ModelViewer::Initialize()
 {
-	// Init Window
-	{
-		WNDCLASSEX wc = { sizeof(WNDCLASSEX),
-						 CS_CLASSDC,
-						 WndProc,
-						 0L,
-						 0L,
-						 GetModuleHandle(NULL),
-						 NULL,
-						 NULL,
-						 NULL,
-						 NULL,
-						 L"Model Viewer", // lpszClassName, L-string
-						 NULL };
-
-		if (!RegisterClassEx(&wc))
-		{
-			std::cout << "RegisterClassEx() failed." << std::endl;
-			return false;
-		}
-
-		RECT wr = { 0, 0, DEFAULT_RESOLUTION.Width, DEFAULT_RESOLUTION.Height };
-		AdjustWindowRect(&wr, WS_OVERLAPPEDWINDOW, false);
-		mWindow = CreateWindow(wc.lpszClassName, L"Model Viewer",
-			WS_OVERLAPPEDWINDOW,
-			100, // 윈도우 좌측 상단의 x 좌표
-			100, // 윈도우 좌측 상단의 y 좌표
-			wr.right - wr.left, // 윈도우 가로 방향 해상도
-			wr.bottom - wr.top, // 윈도우 세로 방향 해상도
-			NULL, NULL, wc.hInstance, NULL);
-		if (!mWindow)
-		{
-			std::cout << "CreateWindow() failed." << std::endl;
-			abort();
-		}
-	}
 	// Init Renderer
 	{
-		mRenderer = make_unique<D3D11Renderer>(mWindow);
+		mRenderer = make_unique<D3D11Renderer>(L"Model Viewer");
 		if (!mRenderer->Initialize())
 		{
 			std::cout << "Initialization failed." << std::endl;
@@ -143,13 +76,10 @@ bool ModelViewer::Initialize()
 		mRenderer->InitCamera(mMainCamera);
 	}
 
-	// Init GUI
+	// Init Gui
 	{
-		mGui = new D3D11Gui(mWindow, mRenderer->mDevice, mRenderer->mContext);
-		mGui->Assgin(mRenderer.get());
-		mGui->OnAttach();
-		ImGui::SetCurrentContext(mGui->Context());
-		EditorGui::Assign(mGui);
+		ImGui::SetCurrentContext(mRenderer->mGui->Context());
+		EditorGui::Assign(mRenderer->GetRenderOption().Resolution.Width, mRenderer->GetRenderOption().Resolution.Height);
 		mRenderer->SetViewport(EditorGui::GetViewportTopLeftX(), EditorGui::GetViewportTopLeftY(), EditorGui::GetViewportWidth(), EditorGui::GetViewportHeight());
 	}
 
@@ -177,6 +107,8 @@ bool ModelViewer::Initialize()
 		mInputProc[MOUSE_RIGHT].Down = InputProcFuncs::RotateBegin;
 		mInputProc[MOUSE_RIGHT].Keep = InputProcFuncs::RotateObject;
 		mInputProc[MOUSE_RIGHT].Up = InputProcFuncs::RotateEnd;
+
+		mRenderer->InitInputProc(&mInputProc);
 	}
 
 	return true;
@@ -184,11 +116,8 @@ bool ModelViewer::Initialize()
 
 void ModelViewer::Run()
 {
-	ShowWindow(mWindow, SW_SHOWDEFAULT);
-	UpdateWindow(mWindow);
-
 	MSG msg = { 0 };
-	while (WM_QUIT != msg.message)
+	while (WM_QUIT != msg.message || mbLoopExit == true)
 	{
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
@@ -198,7 +127,8 @@ void ModelViewer::Run()
 		else
 		{
 			// Update
-			float dt = ImGui::GetIO().DeltaTime;
+			//float dt = ImGui::GetIO().DeltaTime;
+			float dt = 0.016f;
 			mInputProc.Update(dt);
 			mRenderer->Update(dt);
 
@@ -226,23 +156,21 @@ void ModelViewer::Run()
 			mRenderer->RenderEnd();
 
 			// Render GUI
-			mGui->RenderBegin();
+			mRenderer->GuiRenderBegin();
 			EditorGui::DrawTopMenuBar();
 			EditorGui::DrawLeftFrame();
 			EditorGui::DrawRightFrame();
 			EditorGui::DrawBottomFrame();
-			mGui->RenderEnd();
+			mRenderer->GuiRenderEnd();
 
 			mRenderer->Present();
 		}
 	}
-
-	mGui->OnDetach();
-	DestroyWindow(mWindow);
 }
 
-HWND ModelViewer::GetWindow() const { return mWindow; }
-IDIGui* ModelViewer::GetGui() const { return mGui; }
+HWND ModelViewer::GetWindow() const { return mRenderer->mWindow; }
 Camera& ModelViewer::GetCamera() const { return *mMainCamera; }
 RenderContext& ModelViewer::GetModel() { return mMainModel; }
 InputProc& ModelViewer::GetInputProc() { return mInputProc; }
+
+void ModelViewer::ExitLoop() { mbLoopExit = true; }

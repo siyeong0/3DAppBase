@@ -10,7 +10,7 @@
 class RENDERER_API D3D11Renderer : public IDIRenderer
 {
 public:
-	D3D11Renderer(HWND mainWindow);
+	D3D11Renderer(std::wstring title);
 	virtual ~D3D11Renderer();
 
 	virtual bool Initialize() override;
@@ -26,7 +26,9 @@ public:
 
 // protected:
 public:
+	bool initWindow();
 	virtual bool initDevice() override;
+	virtual bool initGui() override;
 	virtual void setMainViewport() override;
 	void setShadowViewport();
 
@@ -37,6 +39,7 @@ public:
 	void setGlobalConstantBuffers(ComPtr<ID3D11Buffer>& globalConstBuf);
 // pivate:
 public:
+	HWND mWindow;
 	// D3D11
 	ComPtr<ID3D11Device> mDevice;
 	ComPtr<ID3D11DeviceContext> mContext;

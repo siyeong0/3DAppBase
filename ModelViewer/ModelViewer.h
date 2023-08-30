@@ -23,19 +23,20 @@ public:
 	void Run();
 
 	HWND GetWindow() const;
-	IDIGui* GetGui() const;
 	Camera& GetCamera() const;
 	RenderContext& GetModel();
 	InputProc& GetInputProc();
+
+	void ExitLoop();
 private:
-	HWND mWindow;
 	unique_ptr<D3D11Renderer> mRenderer;
-	IDIGui* mGui;
 	Camera* mMainCamera;
 	InputProc mInputProc;
 	RenderContext mMainModel;
 	RenderContext mFloor;
 	std::vector<RenderContext> mExtras;
+
+	volatile bool mbLoopExit = false;
 
 	constexpr static float FLOOR_Y = -1.0f;
 };

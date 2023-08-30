@@ -4,27 +4,46 @@
 #include "D3D11MeshObject.h"
 #include "D3D11Skybox.h"
 
-D3D11Renderer::D3D11Renderer(HWND mainWindow)
-	: IDIRenderer(mainWindow)
+#include "D3D11Gui.h"
+
+
+D3D11Renderer::D3D11Renderer(std::wstring title)
+	: IDIRenderer(title)
+	, mWindow(0)
 	, mScreenViewport(D3D11_VIEWPORT())
 {
-
 }
 
 D3D11Renderer::~D3D11Renderer()
 {
-
+	DestroyWindow(mWindow);
 }
 
 bool D3D11Renderer::Initialize()
 {
-	bool br = false;
-	br = IDIRenderer::Initialize();
+	IDIRenderer::Initialize();
+
+	if (!initWindow())
+	{
+		return false;
+	}
+
+	if (!initDevice())
+	{
+		return false;
+	}
+
+	if (!initGui())
+	{
+		return false;
+	}
 
 	D3D11MeshObject::Initialize(mDevice, mContext);
 	D3D11Skybox::Initialize(mDevice, mContext);
 
-	return br;
+	ShowWindow(mWindow, SW_SHOWDEFAULT);
+
+	return true;
 }
 
 void D3D11Renderer::Update(float dt)
@@ -149,13 +168,8 @@ void D3D11Renderer::Present()
 void D3D11Renderer::Resize(int width, int height)
 {
 	IDIRenderer::Resize(width, height);
-	if (mSwapChain)
+	if (mSwapChain && mCamera)
 	{
-		mViewportTopLeftX = int(mViewportTopLeftXRatio * mOption.Resolution.Width);
-		mViewportTopLeftY = int(mViewportTopLeftYRatio * mOption.Resolution.Height);
-		mViewportWidth = int(mViewportWidthRatio * mOption.Resolution.Width);
-		mViewportHeight = int(mViewportHeightRatio * mOption.Resolution.Height);
-
 		mBackBufferRTV.Reset();
 		mSwapChain->ResizeBuffers(0, UINT(mOption.Resolution.Width), UINT(mOption.Resolution.Height), DXGI_FORMAT_UNKNOWN, 0);
 		mCamera->SetAspectRatio(aspectRatio());
@@ -166,6 +180,40 @@ void D3D11Renderer::Resize(int width, int height)
 void D3D11Renderer::InitSkybox(std::wstring envFilename, std::wstring specularFilename, std::wstring irradianceFilename, std::wstring brdfFilename)
 {
 	mCubeMapping.Initialize(envFilename, specularFilename, irradianceFilename, brdfFilename);
+}
+
+bool D3D11Renderer::initWindow()
+{
+	WNDCLASSEX wc = { sizeof(WNDCLASSEX),
+						 CS_CLASSDC,
+						 WndProc,
+						 0L,
+						 0L,
+						 GetModuleHandle(NULL),
+						 NULL,
+						 NULL,
+						 NULL,
+						 NULL,
+						 LPCWSTR(mTitle.c_str()),
+						 NULL };
+
+	if (!RegisterClassEx(&wc))
+	{
+		std::cout << "RegisterClassEx() failed." << std::endl;
+		return false;
+	}
+
+	RECT wr = { 0, 0, DEFAULT_RESOLUTION.Width, DEFAULT_RESOLUTION.Height };
+	AdjustWindowRect(&wr, WS_OVERLAPPEDWINDOW, false);
+	mWindow = CreateWindow(wc.lpszClassName, LPCWSTR(mTitle.c_str()), WS_OVERLAPPEDWINDOW,
+		100, 100, wr.right - wr.left, wr.bottom - wr.top, NULL, NULL, wc.hInstance, NULL);
+	if (!mWindow)
+	{
+		std::cout << "CreateWindow() failed." << std::endl;
+		return false;
+	}
+
+	return true;
 }
 
 bool D3D11Renderer::initDevice()
@@ -196,7 +244,7 @@ bool D3D11Renderer::initDevice()
 	sd.BufferDesc.RefreshRate.Numerator = 60;
 	sd.BufferDesc.RefreshRate.Denominator = 1;
 	sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-	sd.OutputWindow = mMainWindow;
+	sd.OutputWindow = mWindow;
 	sd.Windowed = TRUE;
 	sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH; // allow full-screen switching
 	// sd.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD; //ImGui font issue
@@ -220,6 +268,15 @@ bool D3D11Renderer::initDevice()
 
 	// Init D3D11 Common values
 	D3D11Common::InitCommonStates(mDevice);
+
+	return true;
+}
+
+bool D3D11Renderer::initGui()
+{
+	mGui = new D3D11Gui(mWindow, mDevice, mContext);
+	mGui->OnAttach();
+	ImGui::SetCurrentContext(mGui->Context());
 
 	return true;
 }

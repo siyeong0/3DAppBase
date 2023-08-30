@@ -11,8 +11,6 @@
 using namespace std;
 using filesystem::directory_iterator;
 
-IDIGui* gTargetGui = nullptr;
-
 static constexpr int UNIT_SCREEN_WIDTH = 1920;
 static constexpr int UNIT_SCREEN_HEIGHT = 1080;
 
@@ -31,8 +29,8 @@ static constexpr double mRightFrameHeightRatio = double(DEFAULT_RIGHT_FRAME_HEIG
 static constexpr double mBottomFrameWidthRatio = double(DEFAULT_BOTTOM_FRAME_WIDTH) / UNIT_SCREEN_WIDTH;
 static constexpr double mBottomFrameHeightRatio = double(DEFAULT_BOTTOM_FRAME_HEIGHT) / UNIT_SCREEN_HEIGHT;
 
-static const int* mScreenWidth;
-static const int* mScreenHeight;
+static int mScreenWidth;
+static int mScreenHeight;
 
 static int mLeftFrameWidth;
 static int mLeftFrameHeight;
@@ -43,20 +41,18 @@ static int mBottomFrameHeight;
 
 static void updateLengths() 
 {
-	mLeftFrameWidth = int(mLeftFrameWidthRatio * (*mScreenWidth));
-	mLeftFrameHeight = int(mLeftFrameHeightRatio * (*mScreenHeight));
-	mRightFrameWidth = int(mRightFrameWidthRatio * (*mScreenWidth));
-	mRightFrameHeight = int(mRightFrameHeightRatio * (*mScreenHeight));
-	mBottomFrameWidth = int(mBottomFrameWidthRatio * (*mScreenWidth));
-	mBottomFrameHeight = int(mBottomFrameHeightRatio * (*mScreenHeight));
+	mLeftFrameWidth = int(mLeftFrameWidthRatio * mScreenWidth);
+	mLeftFrameHeight = int(mLeftFrameHeightRatio * mScreenHeight);
+	mRightFrameWidth = int(mRightFrameWidthRatio * mScreenWidth);
+	mRightFrameHeight = int(mRightFrameHeightRatio * mScreenHeight);
+	mBottomFrameWidth = int(mBottomFrameWidthRatio * mScreenWidth);
+	mBottomFrameHeight = int(mBottomFrameHeightRatio * mScreenHeight);
 }
 
-void EditorGui::Assign(IDIGui* targetGui)
+void EditorGui::Assign(int w, int h)
 {
-	gTargetGui = targetGui;
-
-	mScreenWidth = &(gTargetGui->TargetRenderer->GetRenderOption().Resolution.Width);
-	mScreenHeight = &(gTargetGui->TargetRenderer->GetRenderOption().Resolution.Height);
+	mScreenWidth = w;
+	mScreenHeight = h;
 
 	updateLengths();
 }
@@ -69,7 +65,7 @@ void EditorGui::DrawTopMenuBar()
 	updateLengths();
 
 	ImGui::BeginMainMenuBar();
-	ImGui::SetWindowSize(ImVec2(0.f, float((*mScreenWidth) - mRightFrameWidth)));  // Right frame overdraw menubar
+	ImGui::SetWindowSize(ImVec2(0.f, float(mScreenWidth - mRightFrameWidth)));  // Right frame overdraw menubar
 
 	// Menu "File"
 	if (ImGui::BeginMenu("File"))
@@ -251,11 +247,11 @@ void EditorGui::DrawBottomFrame()
 
 int EditorGui::GetViewportWidth()
 {
-	return (*mScreenWidth) - mLeftFrameWidth - mRightFrameWidth;
+	return mScreenWidth - mLeftFrameWidth - mRightFrameWidth;
 }
 int EditorGui::GetViewportHeight()
 {
-	return (*mScreenHeight) - FIXED_TOP_MENUBAR_HEIGTH - mBottomFrameHeight;
+	return mScreenHeight - FIXED_TOP_MENUBAR_HEIGTH - mBottomFrameHeight;
 }
 int EditorGui::GetViewportTopLeftX()
 {

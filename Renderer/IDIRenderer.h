@@ -5,6 +5,9 @@
 #include "RenderOption.h"
 #include "Camera.h"
 #include "InputProc.h"
+#include "IDIGui.h"
+
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 constexpr int DEFAULT_VIEWPORT_WIDTH = 1920;
 constexpr int DEFAULT_VIEWPORT_HEIGHT = 1080;
@@ -15,10 +18,12 @@ class IDIRenderer;
 
 extern "C" RENDERER_API IDIRenderer * GetRenderer();
 
+extern LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
 class RENDERER_API IDIRenderer
 {
 public:
-	IDIRenderer(HWND mainWindow);
+	IDIRenderer(std::wstring title);
 	virtual ~IDIRenderer();
 
 	virtual bool Initialize();
@@ -27,11 +32,15 @@ public:
 	void Render(const RenderContext& context);
 	virtual void RenderEnd() = 0;
 	virtual void Present() = 0;
+	void GuiRenderBegin();
+	void GuiRenderEnd();
+
 
 	void RegistMesh(const std::string& name, IDIMeshObject* meshObj);
 	void AddSpotLight(const Vector3& pos, const Vector3& dir, const Vector3& radiance, float radius, float strength);
 
 	void InitCamera(Camera* camera);
+	void InitInputProc(InputProc* inputProc);
 	virtual void InitSkybox(std::wstring envFilename, std::wstring specularFilename, std::wstring irradianceFilename, std::wstring brdfFilename) = 0;
 
 	void SetRenderOption(RenderOption& option);
@@ -50,15 +59,17 @@ public:
 	int GetViewportHeight() const;
 
 public:
-// protected:
+	// protected:
 	virtual bool initDevice() = 0;
+	virtual bool initGui() = 0;
 	virtual void setMainViewport() = 0;
 
 	float aspectRatio() const;
 	void updateNdc(int x, int y);
 
 public:
-// protected:
+	// protected:
+	std::wstring mTitle;
 	// Object Buffers
 	std::unordered_map<std::string, IDIMeshObject*> mMeshTable;
 	std::vector<const RenderContext*> mInCameraFrustum;
@@ -71,10 +82,13 @@ public:
 	int mNumLights = 0;
 
 	// IO Utils
+	IDIGui* mGui;
 	Camera* mCamera;
+	InputProc* mInputProc;
 
-	// Main Window
-	HWND mMainWindow;
+	// Render Options
+	bool mbOptionDirty = true;
+	RenderOption mOption;
 
 	int mViewportTopLeftX;
 	int mViewportTopLeftY;
@@ -89,7 +103,4 @@ public:
 	float mCursorNdcX;
 	float mCursorNdcY;
 
-	// Render Options
-	RenderOption mOption;
-	bool mbOptionDirty = true;
 };
