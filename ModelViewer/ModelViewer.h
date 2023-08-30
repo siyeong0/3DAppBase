@@ -17,7 +17,7 @@ class ModelViewer
 {
 public:
 	ModelViewer();
-	~ModelViewer() = default;
+	~ModelViewer();
 
 	bool Initialize();
 	void Run();
@@ -30,6 +30,8 @@ public:
 	void ExitLoop();
 private:
 	unique_ptr<D3D11Renderer> mRenderer;
+	IDIGui* mGui;
+	std::vector<IFrame*> mFrames;
 	Camera* mMainCamera;
 	InputProc mInputProc;
 	RenderContext mMainModel;

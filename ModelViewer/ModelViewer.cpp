@@ -15,6 +15,15 @@ ModelViewer::ModelViewer()
 {
 	gModelViewer = this;
 }
+ModelViewer::~ModelViewer()
+{
+	gModelViewer = nullptr;
+
+	for (auto& ptr : mFrames)
+	{
+		delete ptr;
+	}
+}
 
 bool ModelViewer::Initialize()
 {
@@ -78,8 +87,26 @@ bool ModelViewer::Initialize()
 
 	// Init Gui
 	{
-		ImGui::SetCurrentContext(mRenderer->mGui->Context());
-		EditorGui::Assign(mRenderer->GetRenderOption().Resolution.Width, mRenderer->GetRenderOption().Resolution.Height);
+		mGui = GetGui();
+		IFrame* f = nullptr;
+
+		f = new EditorGui::MenuBar();
+		mFrames.push_back(f);
+		mGui->Regist("menu", f);
+
+		f = new EditorGui::LeftFrame();
+		mFrames.push_back(f);
+		mGui->Regist("left", f);
+
+		f = new EditorGui::RightFrame();
+		mFrames.push_back(f);
+		mGui->Regist("right", f);
+
+		f = new EditorGui::BottomFrame();
+		mFrames.push_back(f);
+		mGui->Regist("bottom", f);
+
+		ImGui::SetCurrentContext(mGui->Context());
 		mRenderer->SetViewport(EditorGui::GetViewportTopLeftX(), EditorGui::GetViewportTopLeftY(), EditorGui::GetViewportWidth(), EditorGui::GetViewportHeight());
 	}
 
@@ -116,6 +143,7 @@ bool ModelViewer::Initialize()
 
 void ModelViewer::Run()
 {
+	IDIGui* mGui = GetGui();
 	MSG msg = { 0 };
 	while (WM_QUIT != msg.message || mbLoopExit == true)
 	{
@@ -156,12 +184,12 @@ void ModelViewer::Run()
 			mRenderer->RenderEnd();
 
 			// Render GUI
-			mRenderer->GuiRenderBegin();
-			EditorGui::DrawTopMenuBar();
-			EditorGui::DrawLeftFrame();
-			EditorGui::DrawRightFrame();
-			EditorGui::DrawBottomFrame();
-			mRenderer->GuiRenderEnd();
+			mGui->RenderBegin();
+			mGui->Render("menu");
+			mGui->Render("left");
+			mGui->Render("right");
+			mGui->Render("bottom");
+			mGui->RenderEnd();
 
 			mRenderer->Present();
 		}

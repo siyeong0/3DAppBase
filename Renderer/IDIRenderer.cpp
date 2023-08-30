@@ -100,16 +100,6 @@ void IDIRenderer::Render(const RenderContext& context)
 	}
 }
 
-void IDIRenderer::GuiRenderBegin()
-{
-	mGui->RenderBegin();
-}
-
-void IDIRenderer::GuiRenderEnd()
-{
-	mGui->RenderEnd();
-}
-
 void IDIRenderer::RegistMesh(const std::string& name, IDIMeshObject* meshObj)
 {
 	mMeshTable[name] = meshObj;

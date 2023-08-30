@@ -173,6 +173,7 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="IDIGui.h" />
     <ClInclude Include="IDIMeshObject.h" />
+    <ClInclude Include="IFrame.h" />
     <ClInclude Include="InputProc.h" />
     <ClInclude Include="IDIRenderer.h" />
     <ClInclude Include="pch.h" />

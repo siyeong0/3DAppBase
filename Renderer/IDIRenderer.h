@@ -32,9 +32,6 @@ public:
 	void Render(const RenderContext& context);
 	virtual void RenderEnd() = 0;
 	virtual void Present() = 0;
-	void GuiRenderBegin();
-	void GuiRenderEnd();
-
 
 	void RegistMesh(const std::string& name, IDIMeshObject* meshObj);
 	void AddSpotLight(const Vector3& pos, const Vector3& dir, const Vector3& radiance, float radius, float strength);

@@ -1,14 +1,39 @@
 #pragma once
-#include "IDIGui.h"
+#include "IFrame.h"
 
 namespace EditorGui
 {
-	void Assign(int w, int h);
+	class MenuBar : public IFrame
+	{
+	public:
+		MenuBar();
+		virtual ~MenuBar() = default;
+		virtual void Draw() override;
+	};
 
-	void DrawTopMenuBar();
-	void DrawLeftFrame();
-	void DrawRightFrame();
-	void DrawBottomFrame();
+	class LeftFrame : public IFrame
+	{
+	public:
+		LeftFrame();
+		virtual ~LeftFrame() = default;
+		virtual void Draw() override;
+	};
+
+	class RightFrame : public IFrame
+	{
+	public:
+		RightFrame();
+		virtual ~RightFrame() = default;
+		virtual void Draw() override;
+	};
+
+	class BottomFrame : public IFrame
+	{
+	public:
+		BottomFrame();
+		virtual ~BottomFrame() = default;
+		virtual void Draw() override;
+	};
 
 	int GetViewportWidth();
 	int GetViewportHeight();
