@@ -55,6 +55,8 @@ public:
 	int GetViewportWidth() const;
 	int GetViewportHeight() const;
 
+	virtual void SetCursorPosition(int x, int y) = 0;
+
 public:
 	// protected:
 	virtual bool initDevice() = 0;

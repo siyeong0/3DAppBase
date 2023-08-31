@@ -55,10 +55,9 @@ void InputProcFuncs::MoveView(float dt)
 	if (bFPV)
 	{
 		GetModelViewer()->GetCamera().OnMouseMove(GetRenderer()->mCursorNdcX, GetRenderer()->mCursorNdcY);
-
-		POINT Center{ int(GetRenderer()->mViewportTopLeftX + GetRenderer()->mViewportWidth / 2), int(GetRenderer()->mViewportTopLeftY + GetRenderer()->mViewportHeight / 2)};
-		//ClientToScreen(GetModelViewer()->GetWindow(), &Center);
-		SetCursorPos(Center.x, Center.y);
+		GetRenderer()->SetCursorPosition(
+			int(GetRenderer()->mViewportTopLeftX + GetRenderer()->mViewportWidth / 2),
+			int(GetRenderer()->mViewportTopLeftY + GetRenderer()->mViewportHeight / 2));
 	}
 }
 
@@ -124,7 +123,7 @@ void InputProcFuncs::DragEnd()
 
 void InputProcFuncs::RotateBegin()
 {
-		bDrag = true;
+	bDrag = true;
 }
 void InputProcFuncs::RotateObject(float dt)
 {

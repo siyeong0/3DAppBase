@@ -182,6 +182,13 @@ void D3D11Renderer::InitSkybox(std::wstring envFilename, std::wstring specularFi
 	mCubeMapping.Initialize(envFilename, specularFilename, irradianceFilename, brdfFilename);
 }
 
+void D3D11Renderer::SetCursorPosition(int x, int y)
+{
+	POINT pos = { x,y };
+	ClientToScreen(mWindow, &pos);
+	SetCursorPos(pos.x, pos.y);
+}
+
 bool D3D11Renderer::initWindow()
 {
 	WNDCLASSEX wc = { sizeof(WNDCLASSEX),

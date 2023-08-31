@@ -22,6 +22,8 @@ public:
 
 	virtual void InitSkybox(std::wstring envFilename, std::wstring specularFilename, std::wstring irradianceFilename, std::wstring brdfFilename) override;
 
+	virtual void SetCursorPosition(int x, int y) override;
+
 // protected:
 public:
 	virtual bool initDevice() override;
@@ -30,5 +32,15 @@ public:
 
 // pivate:
 public:
-	GLFWwindow* mMainWindow;
+	GLFWwindow* mWindow;
+	//
+	GLuint mVertexArray;
+	GLuint mVertexBuffer;
+	GLuint mIndexBuffer;
+	GLuint mProgram;
+	GLuint mTexture;
+
+	Matrix mWorld;
+	GLuint mMatWorld;
+	GLuint mMatVP;
 };

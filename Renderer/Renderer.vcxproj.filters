@@ -13,18 +13,6 @@
     <Filter Include="D3D11\Utils">
       <UniqueIdentifier>{b86cf8ff-e33f-4c78-ac18-41ea268014b3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="D3D11\Common">
-      <UniqueIdentifier>{db94a358-763c-429c-ba80-9283ca07d985}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Shader">
-      <UniqueIdentifier>{c4bacf23-a8c5-4cf1-b047-3a9d78953ae4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Shader\HLSL">
-      <UniqueIdentifier>{732000d8-a9f3-4317-9ee9-9093737dd8b7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="D3D11\Common\PSO">
-      <UniqueIdentifier>{c3bb6649-59ea-4cf3-9488-674e9b572fbe}</UniqueIdentifier>
-    </Filter>
     <Filter Include="D3D11\Renderer">
       <UniqueIdentifier>{8f4d8d4d-5b86-42ac-97ce-b70be17982c4}</UniqueIdentifier>
     </Filter>
@@ -76,6 +64,21 @@
     <Filter Include="IDI\Gui">
       <UniqueIdentifier>{352ec253-fb33-4a30-8cbd-b1bb3907f80a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="OpenGL\Utils">
+      <UniqueIdentifier>{a349b2db-469b-4588-8d75-11b654d732a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{c4bacf23-a8c5-4cf1-b047-3a9d78953ae4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\HLSL">
+      <UniqueIdentifier>{732000d8-a9f3-4317-9ee9-9093737dd8b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\GLSL">
+      <UniqueIdentifier>{8c3fb175-6332-4f26-9a72-a322d14b7f93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\ImageReader">
+      <UniqueIdentifier>{5ffd9b42-2e67-46d7-a27b-598150936688}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -95,12 +98,6 @@
     </ClInclude>
     <ClInclude Include="D3D11Utils.h">
       <Filter>D3D11\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="D3D11PSO.h">
-      <Filter>D3D11\Common\PSO</Filter>
-    </ClInclude>
-    <ClInclude Include="D3D11Common.h">
-      <Filter>D3D11\Common</Filter>
     </ClInclude>
     <ClInclude Include="D3D11Mesh.h">
       <Filter>Common\Mesh</Filter>
@@ -150,6 +147,18 @@
     <ClInclude Include="GLRenderer.h">
       <Filter>OpenGL\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="GLUtils.h">
+      <Filter>OpenGL\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11Common.h">
+      <Filter>D3D11\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11PSO.h">
+      <Filter>D3D11\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageReader.h">
+      <Filter>Common\ImageReader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -166,12 +175,6 @@
     </ClCompile>
     <ClCompile Include="D3D11Utils.cpp">
       <Filter>D3D11\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="D3D11PSO.cpp">
-      <Filter>D3D11\Common\PSO</Filter>
-    </ClCompile>
-    <ClCompile Include="D3D11Common.cpp">
-      <Filter>D3D11\Common</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Common\Camera</Filter>
@@ -203,60 +206,78 @@
     <ClCompile Include="GLRenderer.cpp">
       <Filter>OpenGL\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="GLUtils.cpp">
+      <Filter>OpenGL\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D11Common.cpp">
+      <Filter>D3D11\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D11PSO.cpp">
+      <Filter>D3D11\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageReader.cpp">
+      <Filter>Common\ImageReader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shaders\BasicPS.hlsl">
-      <Filter>Shader\HLSL</Filter>
+      <Filter>Shaders\HLSL</Filter>
     </FxCompile>
     <FxCompile Include="Shaders\BasicVS.hlsl">
-      <Filter>Shader\HLSL</Filter>
+      <Filter>Shaders\HLSL</Filter>
     </FxCompile>
     <FxCompile Include="Shaders\BloomDownPS.hlsl">
-      <Filter>Shader\HLSL</Filter>
+      <Filter>Shaders\HLSL</Filter>
     </FxCompile>
     <FxCompile Include="Shaders\BloomUpPS.hlsl">
-      <Filter>Shader\HLSL</Filter>
+      <Filter>Shaders\HLSL</Filter>
     </FxCompile>
     <FxCompile Include="Shaders\ColorPS.hlsl">
-      <Filter>Shader\HLSL</Filter>
+      <Filter>Shaders\HLSL</Filter>
     </FxCompile>
     <FxCompile Include="Shaders\CombinePS.hlsl">
-      <Filter>Shader\HLSL</Filter>
+      <Filter>Shaders\HLSL</Filter>
     </FxCompile>
     <FxCompile Include="Shaders\DepthOnlyPS.hlsl">
-      <Filter>Shader\HLSL</Filter>
+      <Filter>Shaders\HLSL</Filter>
     </FxCompile>
     <FxCompile Include="Shaders\DepthOnlyVS.hlsl">
-      <Filter>Shader\HLSL</Filter>
+      <Filter>Shaders\HLSL</Filter>
     </FxCompile>
     <FxCompile Include="Shaders\NormalGS.hlsl">
-      <Filter>Shader\HLSL</Filter>
+      <Filter>Shaders\HLSL</Filter>
     </FxCompile>
     <FxCompile Include="Shaders\NormalPS.hlsl">
-      <Filter>Shader\HLSL</Filter>
+      <Filter>Shaders\HLSL</Filter>
     </FxCompile>
     <FxCompile Include="Shaders\NormalVS.hlsl">
-      <Filter>Shader\HLSL</Filter>
+      <Filter>Shaders\HLSL</Filter>
     </FxCompile>
     <FxCompile Include="Shaders\SamplingPS.hlsl">
-      <Filter>Shader\HLSL</Filter>
+      <Filter>Shaders\HLSL</Filter>
     </FxCompile>
     <FxCompile Include="Shaders\SamplingVS.hlsl">
-      <Filter>Shader\HLSL</Filter>
+      <Filter>Shaders\HLSL</Filter>
     </FxCompile>
     <FxCompile Include="Shaders\SkyboxPS.hlsl">
-      <Filter>Shader\HLSL</Filter>
+      <Filter>Shaders\HLSL</Filter>
     </FxCompile>
     <FxCompile Include="Shaders\SkyboxVS.hlsl">
-      <Filter>Shader\HLSL</Filter>
+      <Filter>Shaders\HLSL</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\Common.hlsli">
-      <Filter>Shader\HLSL</Filter>
+      <Filter>Shaders\HLSL</Filter>
     </None>
     <None Include="Shaders\DiskSamples.hlsli">
-      <Filter>Shader\HLSL</Filter>
+      <Filter>Shaders\HLSL</Filter>
+    </None>
+    <None Include="Shaders\BasicPS.glsl">
+      <Filter>Shaders\GLSL</Filter>
+    </None>
+    <None Include="Shaders\BasicVS.glsl">
+      <Filter>Shaders\GLSL</Filter>
     </None>
   </ItemGroup>
 </Project>

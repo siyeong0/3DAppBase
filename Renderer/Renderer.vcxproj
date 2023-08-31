@@ -172,9 +172,11 @@
     <ClInclude Include="dllAPI.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GLRenderer.h" />
+    <ClInclude Include="GLUtils.h" />
     <ClInclude Include="IDIGui.h" />
     <ClInclude Include="IDIMeshObject.h" />
     <ClInclude Include="IFrame.h" />
+    <ClInclude Include="ImageReader.h" />
     <ClInclude Include="InputProc.h" />
     <ClInclude Include="IDIRenderer.h" />
     <ClInclude Include="pch.h" />
@@ -195,8 +197,10 @@
     <ClCompile Include="D3D11Utils.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="GLRenderer.cpp" />
+    <ClCompile Include="GLUtils.cpp" />
     <ClCompile Include="IDIGui.cpp" />
     <ClCompile Include="IDIMeshObject.cpp" />
+    <ClCompile Include="ImageReader.cpp" />
     <ClCompile Include="InputPorc.cpp" />
     <ClCompile Include="IDIRenderer.cpp" />
     <ClCompile Include="pch.cpp">
@@ -299,6 +303,8 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Shaders\BasicPS.glsl" />
+    <None Include="Shaders\BasicVS.glsl" />
     <None Include="Shaders\Common.hlsli" />
     <None Include="Shaders\DiskSamples.hlsli" />
   </ItemGroup>

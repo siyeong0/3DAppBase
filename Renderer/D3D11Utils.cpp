@@ -10,9 +10,9 @@
 #include <fp16.h>
 #include <iostream>
 
-#define STB_IMAGE_IMPLEMENTATION
+#include "ImageReader.h"
+
 #define STB_IMAGE_WRITE_IMPLEMENTATION
-#include "stb_image.h"
 #include "stb_image_write.h"
 
 using namespace std;
@@ -164,64 +164,6 @@ void ReadEXRImage(const std::string filename, std::vector<uint8_t>& image, int& 
 	const float maxValue = *std::max_element(f32.begin(), f32.end());
 
 	cout << minValue << " " << maxValue << endl;
-}
-
-void ReadImage(const std::string filename, std::vector<uint8_t>& image, int& width, int& height)
-{
-	int channels;
-	unsigned char* img = stbi_load(filename.c_str(), &width, &height, &channels, 0);
-	// assert(channels == 4);
-	cout << filename << " " << width << " " << height << " " << channels << endl;
-	image.resize(width * height * 4);
-
-	if (channels == 1)
-	{
-		for (size_t i = 0; i < width * height; i++)
-		{
-			uint8_t g = img[i * channels + 0];
-			for (size_t c = 0; c < 4; c++)
-			{
-				image[4 * i + c] = g;
-			}
-		}
-	}
-	else if (channels == 2)
-	{
-		for (size_t i = 0; i < width * height; i++)
-		{
-			for (size_t c = 0; c < 2; c++)
-			{
-				image[4 * i + c] = img[i * channels + c];
-			}
-			image[4 * i + 2] = 255;
-			image[4 * i + 3] = 255;
-		}
-	}
-	else if (channels == 3)
-	{
-		for (size_t i = 0; i < width * height; i++)
-		{
-			for (size_t c = 0; c < 3; c++)
-			{
-				image[4 * i + c] = img[i * channels + c];
-			}
-			image[4 * i + 3] = 255;
-		}
-	}
-	else if (channels == 4)
-	{
-		for (size_t i = 0; i < width * height; i++)
-		{
-			for (size_t c = 0; c < 4; c++)
-			{
-				image[4 * i + c] = img[i * channels + c];
-			}
-		}
-	}
-	else
-	{
-		cout << "Cannot read " << channels << " channels" << endl;
-	}
 }
 
 ComPtr<ID3D11Texture2D> CreateStagingTexture(

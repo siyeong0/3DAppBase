@@ -24,6 +24,8 @@ public:
 
 	virtual void InitSkybox(std::wstring envFilename, std::wstring specularFilename, std::wstring irradianceFilename, std::wstring brdfFilename) override;
 
+	virtual void SetCursorPosition(int x, int y) override;
+
 // protected:
 public:
 	bool initWindow();

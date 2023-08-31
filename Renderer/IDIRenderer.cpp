@@ -80,6 +80,7 @@ bool IDIRenderer::Initialize()
 void IDIRenderer::Update(float dt)
 {
 	mCamera->Update(dt);
+	mInputProc->Update(dt);
 }
 
 void IDIRenderer::Render(const RenderContext& context)

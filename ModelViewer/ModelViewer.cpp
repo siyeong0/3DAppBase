@@ -93,11 +93,11 @@ bool ModelViewer::Initialize()
 	//	mExtras.push_back(RenderContext("sphere", pos2));
 	//}
 
-	//// Init Camera
-	//{
-	//	mMainCamera = new Camera({ 0.0f, 0.0f, -2.0f }, { 0,1,0 }, 0, 0);
-	//	mRenderer->InitCamera(mMainCamera);
-	//}
+	// Init Camera
+	{
+		mMainCamera = new Camera({ 0.0f, 0.0f, -5.0f }, { 0,1,0 }, 0, 0);
+		mRenderer->InitCamera(mMainCamera);
+	}
 
 	//// Init Gui
 	//{
@@ -124,33 +124,33 @@ bool ModelViewer::Initialize()
 	//	mRenderer->SetViewport(EditorGui::GetViewportTopLeftX(), EditorGui::GetViewportTopLeftY(), EditorGui::GetViewportWidth(), EditorGui::GetViewportHeight());
 	//}
 
-	//// Init InputProc
-	//{
-	//	// First person view
-	//	mInputProc['F'].Down = InputProcFuncs::SetFirstPersonView;
-	//	// WASD Camera move
-	//	mInputProc['W'].Keep = InputProcFuncs::MoveForward;
-	//	mInputProc['A'].Keep = InputProcFuncs::MoveLeft;
-	//	mInputProc['S'].Keep = InputProcFuncs::MoveBackward;
-	//	mInputProc['D'].Keep = InputProcFuncs::MoveRight;
-	//	mInputProc[' '].Keep = InputProcFuncs::MoveUp;
-	//	mInputProc[VK_SHIFT].Keep = InputProcFuncs::MoveDown;
-	//	// Window destroy
-	//	mInputProc[27].Up = InputProcFuncs::Terminate;
+	// Init InputProc
+	{
+		// First person view
+		mInputProc['F'].Down = InputProcFuncs::SetFirstPersonView;
+		// WASD Camera move
+		mInputProc['W'].Keep = InputProcFuncs::MoveForward;
+		mInputProc['A'].Keep = InputProcFuncs::MoveLeft;
+		mInputProc['S'].Keep = InputProcFuncs::MoveBackward;
+		mInputProc['D'].Keep = InputProcFuncs::MoveRight;
+		mInputProc[' '].Keep = InputProcFuncs::MoveUp;
+		mInputProc[VK_SHIFT].Keep = InputProcFuncs::MoveDown;
+		// Window destroy
+		mInputProc[27].Up = InputProcFuncs::Terminate;
 
-	//	// Mouse Input
-	//	mInputProc[MOUSE_MOVE].bKeep = true;
-	//	mInputProc[MOUSE_MOVE].Keep = InputProcFuncs::MoveView;
+		// Mouse Input
+		mInputProc[MOUSE_MOVE].bKeep = true;
+		mInputProc[MOUSE_MOVE].Keep = InputProcFuncs::MoveView;
 
-	//	mInputProc[MOUSE_LEFT].Down = InputProcFuncs::DragBegin;
-	//	mInputProc[MOUSE_LEFT].Keep = InputProcFuncs::DragObject;
-	//	mInputProc[MOUSE_LEFT].Up = InputProcFuncs::DragEnd;
-	//	mInputProc[MOUSE_RIGHT].Down = InputProcFuncs::RotateBegin;
-	//	mInputProc[MOUSE_RIGHT].Keep = InputProcFuncs::RotateObject;
-	//	mInputProc[MOUSE_RIGHT].Up = InputProcFuncs::RotateEnd;
+		mInputProc[MOUSE_LEFT].Down = InputProcFuncs::DragBegin;
+		mInputProc[MOUSE_LEFT].Keep = InputProcFuncs::DragObject;
+		mInputProc[MOUSE_LEFT].Up = InputProcFuncs::DragEnd;
+		mInputProc[MOUSE_RIGHT].Down = InputProcFuncs::RotateBegin;
+		mInputProc[MOUSE_RIGHT].Keep = InputProcFuncs::RotateObject;
+		mInputProc[MOUSE_RIGHT].Up = InputProcFuncs::RotateEnd;
 
-	//	mRenderer->InitInputProc(&mInputProc);
-	//}
+		mRenderer->InitInputProc(&mInputProc);
+	}
 
 	return true;
 }
@@ -170,9 +170,8 @@ void ModelViewer::Run()
 		{
 			//// Update
 			////float dt = ImGui::GetIO().DeltaTime;
-			//float dt = 0.016f;
-			//mInputProc.Update(dt);
-			//mRenderer->Update(dt);
+			float dt = 0.016f;
+			mRenderer->Update(dt);
 
 			//// Update Model position
 			//Vector3 translation = mMainModel.TransformMatrix.Translation();
